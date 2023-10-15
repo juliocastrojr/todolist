@@ -19,8 +19,10 @@ public class TaskController {
 
     @PostMapping("/")
     public TaskModel create(@RequestBody TaskModel taskModel, HttpServletRequest request) {
+        // Pegando o atributo idUser setado na filterTaskAuth
+        var userId = (UUID)request.getAttribute("idUser");
         // Passando o ID do usuário logado para registrar a tarefa
-        taskModel.setIdUser((UUID)request.getAttribute("idUser"));
+        taskModel.setIdUser(userId);
         var task = this.taskRepository.save(taskModel);
         return task;
     }
